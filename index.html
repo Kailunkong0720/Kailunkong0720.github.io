@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="light" data-lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio</title>
+  <meta name="description" content="Software engineer portfolio — projects, experience and education.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/interactive.css">
+  <script>
+    // 在畫面出現前先套用上次選的語言與主題，避免閃爍
+    (function () {
+      try {
+        var r = document.documentElement;
+        var l = localStorage.getItem("lang"), t = localStorage.getItem("theme");
+        if (!l) l = (navigator.language || "zh").toLowerCase().indexOf("zh") === 0 ? "zh" : "en";
+        if (!t) t = "light"; // 預設明亮版；訪客可用右上角按鈕切換深色
+        r.dataset.lang = l; r.dataset.theme = t; r.lang = l === "zh" ? "zh-Hant" : "en";
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="a11y.skip"></a>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__label" id="cursorLabel"></span></div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" data-cursor="grow">
+      <span class="brand__dot" aria-hidden="true"></span>
+      <span class="brand__name" data-bind="name"></span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#about" data-nav="about" data-i18n="nav.about"></a>
+      <a href="#experience" data-nav="experience" data-i18n="nav.experience"></a>
+      <a href="#projects" data-nav="projects" data-i18n="nav.projects"></a>
+      <a href="#skills" data-nav="skills" data-i18n="nav.skills"></a>
+      <a href="#contact" data-nav="contact" data-i18n="nav.contact"></a>
+    </nav>
+    <div class="nav__tools">
+      <button class="tool tool--k" id="paletteBtn" type="button" aria-haspopup="dialog" aria-label="Command menu">
+        <span data-i18n="nav.search"></span><kbd id="kbdMod">Ctrl</kbd><kbd>K</kbd>
+      </button>
+      <button class="tool tool--lang" id="langBtn" type="button" aria-label="Switch language">
+        <span class="lang-opt" data-l="zh">中</span><span class="lang-sep">/</span><span class="lang-opt" data-l="en">EN</span>
+      </button>
+      <button class="tool tool--theme" id="themeBtn" type="button" aria-label="Toggle theme">
+        <span class="theme-ico" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top">
+      <div class="stage" id="stage" aria-hidden="true"></div>
+      <div class="hero__inner">
+        <p class="status"><span class="pulse" aria-hidden="true"></span><span data-bind="status"></span><span class="status__sep">·</span><span data-bind="location"></span></p>
+        <h1 class="hero__title">
+          <span class="hello" id="hello" aria-live="off">Hello,</span>
+          <span class="hero__line"><span data-i18n="hero.iam"></span> <em class="hero__name" data-bind="name"></em></span>
+        </h1>
+        <p class="hero__role"><span class="hero__role-prefix">&gt;</span> <span id="role"></span><span class="caret" aria-hidden="true"></span></p>
+        <p class="hero__intro" data-bind="intro"></p>
+        <div class="hero__cta">
+          <a class="btn btn--solid" href="#projects" data-magnet data-i18n="hero.cta1"></a>
+          <a class="btn btn--ghost" id="resumeLink" href="#" target="_blank" rel="noopener" data-magnet data-i18n="hero.cta2"></a>
+        </div>
+      </div>
+      <p class="hero__hint"><span class="hint-arrow" aria-hidden="true">↗</span> <span data-i18n="hero.hint"></span></p>
+      <a class="scroll-cue" href="#about" aria-label="Scroll"><span></span></a>
+    </section>
+
+    <div class="marquee" id="marquee" aria-hidden="true"><div class="marquee__track" id="marqueeTrack"></div></div>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="sec" id="about">
+      <header class="sec__head"><span class="sec__num">01</span><h2 class="sec__title" data-i18n="about.title"></h2></header>
+      <div class="about">
+        <button class="portrait" id="portrait" type="button" data-cursor="label" data-cursor-key="cursor.click">
+          <span class="portrait__shape" id="portraitShape"></span>
+        </button>
+        <div class="about__body">
+          <div class="about__text" id="aboutText"></div>
+          <dl class="facts" id="facts"></dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EXPERIENCE ============ -->
+    <section class="sec" id="experience">
+      <header class="sec__head"><span class="sec__num">02</span><h2 class="sec__title" data-i18n="exp.title"></h2></header>
+      <div class="tabs" id="tlTabs" role="tablist">
+        <button class="tab is-on" type="button" role="tab" data-filter="all" data-i18n="exp.all"></button>
+        <button class="tab" type="button" role="tab" data-filter="work" data-i18n="exp.work"></button>
+        <button class="tab" type="button" role="tab" data-filter="edu" data-i18n="exp.edu"></button>
+      </div>
+      <ol class="tl" id="timeline"></ol>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section class="sec" id="projects">
+      <header class="sec__head"><span class="sec__num">03</span><h2 class="sec__title" data-i18n="proj.title"></h2></header>
+      <div class="filters" id="projFilters"></div>
+      <ul class="plist" id="projectList"></ul>
+      <p class="empty" id="projEmpty" hidden data-i18n="proj.empty"></p>
+      <div class="pfloat" id="pfloat" aria-hidden="true"></div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="sec" id="skills">
+      <header class="sec__head"><span class="sec__num">04</span><h2 class="sec__title" data-i18n="skills.title"></h2></header>
+      <p class="sec__note" data-i18n="skills.note"></p>
+      <div class="skills" id="skillsGrid"></div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="sec contact" id="contact">
+      <header class="sec__head"><span class="sec__num">05</span><h2 class="sec__title" data-i18n="contact.title"></h2></header>
+      <p class="contact__big" data-i18n="contact.big"></p>
+      <button class="mail" id="copyEmail" type="button" data-cursor="label" data-cursor-key="cursor.copy">
+        <span class="mail__addr" id="emailText"></span>
+        <span class="mail__hint" data-i18n="contact.copy"></span>
+      </button>
+      <div class="contact__links" id="contactLinks"></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p><span data-i18n="foot.made"></span> <span data-bind="name"></span> · <span id="footYear"></span></p>
+    <p class="foot__egg" data-i18n="foot.egg"></p>
+    <a class="foot__top" href="#top" data-i18n="foot.top"></a>
+  </footer>
+
+  <!-- 指令面板 (Ctrl/⌘ + K) -->
+  <div class="palette" id="palette" hidden>
+    <div class="palette__box" role="dialog" aria-modal="true" aria-labelledby="paletteInput">
+      <input class="palette__input" id="paletteInput" type="text" autocomplete="off" spellcheck="false">
+      <ul class="palette__list" id="paletteList" role="listbox"></ul>
+      <p class="palette__foot"><kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="pal.move"></span> <kbd>Enter</kbd> <span data-i18n="pal.run"></span> <kbd>Esc</kbd> <span data-i18n="pal.close"></span></p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/content.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/stage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/fx.js"></script>
+  <script src="js/palette.js"></script>
+</body>
+</html>
