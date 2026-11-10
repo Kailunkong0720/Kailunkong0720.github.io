@@ -46,8 +46,17 @@ python -m http.server 5173
 - `js/stage.js`：首頁可拖曳的圖形
 - `js/ui.js`、`js/fx.js`、`js/palette.js`：游標、捲動動畫、指令面板、彩蛋
 
-## 上線（免費）
+## 上線
 
-1. 在 GitHub 建一個公開 repository，把這個資料夾的檔案全部上傳。
-2. 到 repository 的 Settings → Pages，Source 選 `main` 分支、資料夾選 `/ (root)`。
-3. 幾分鐘後網址會是 `https://你的帳號.github.io/repository名稱/`。
+網站放在 GitHub Pages：
+
+- 網址：<https://kailunkong0720.github.io/>
+- Repository：<https://github.com/Kailunkong0720/Kailunkong0720.github.io>
+
+改完內容後，在這個資料夾依序執行下面三行，約 1 分鐘後網站就會更新：
+
+```bash
+git add -A
+git commit -m "Update content"
+git push
+```
