@@ -1,19 +1,19 @@
 /* =====================================================================
    網站內容都在這個檔案。改這裡就好，不需要動其他程式。
    每段文字都有 zh（中文）與 en（英文）兩個版本，右上角可切換。
-   目前全部是「示意內容」，請換成你自己的資料。
+   新增或修改內容後，執行 git add -A、git commit、git push 即可更新網站。
    ===================================================================== */
 window.SITE = {
   meta: {
-    email: "your.name@example.com",
-    github: "https://github.com/your-id",
-    linkedin: "https://www.linkedin.com/in/your-id",
+    email: "kailun20010720@gmail.com",
+    github: "https://github.com/Kailunkong0720",
+    linkedin: "", // 有 LinkedIn 的話貼上網址，例如 "https://www.linkedin.com/in/xxx"；留空就不顯示
     resume: "assets/resume.pdf", // 把履歷 PDF 放到 assets/ 資料夾
     updated: "2026-11",
   },
 
   profile: {
-    name: { zh: "你的名字", en: "Your Name" },
+    name: { zh: "江凱倫", en: "Conan Kong" },
     // 首頁會輪播的身分描述
     roles: [
       { zh: "軟體工程師", en: "Software Engineer" },
@@ -29,183 +29,127 @@ window.SITE = {
     },
     about: [
       {
-        zh: "（示意）我是資訊相關科系畢業的新鮮人，在學期間做過三份實習，從前端畫面一路寫到後端服務與部署。",
-        en: "(Sample) I'm a recent CS graduate. Across three internships I've worked from frontend screens down to backend services and deployment.",
+        zh: "我是江凱倫，目前就讀國立政治大學資訊科學系碩士班，預計 2027 年 1 月畢業，同時在永豐銀行實習，負責資料庫維運與內部網站開發；大學畢業於國立臺灣海洋大學資訊工程學系。",
+        en: "I'm Conan Kong, a master's student in Computer Science at National Chengchi University (graduating January 2027). I'm currently an intern at Bank SinoPac, where I maintain databases and build internal web tools. I hold a bachelor's degree in Computer Science and Engineering from National Taiwan Ocean University.",
       },
       {
-        zh: "（示意）我習慣先理解「為什麼要做」，再決定「怎麼做」。寫程式之外，我也喜歡寫文件、做 code review，讓團隊更好合作。",
-        en: "(Sample) I start with why before how. Beyond coding, I enjoy writing docs and doing code reviews so the team works better together.",
+        zh: "研究所期間，我以深度學習分析腦部訊號，已在 IVPAI 2026 與 APSIPA ASC 2026 兩場國際研討會發表論文；實務上則累積了 .NET、MSSQL 與資料視覺化的開發經驗。",
+        en: "In grad school I apply deep learning to brain signals, and have presented papers at two international conferences, IVPAI 2026 and APSIPA ASC 2026. On the industry side, I build with .NET, MSSQL and data visualization.",
       },
     ],
     facts: [
       { k: { zh: "所在地", en: "Based in" }, v: { zh: "台北", en: "Taipei" } },
-      { k: { zh: "專長", en: "Focus" }, v: { zh: "Web 全端開發", en: "Full-stack web" } },
-      { k: { zh: "語言", en: "Languages" }, v: { zh: "中文、英文", en: "Mandarin, English" } },
-      { k: { zh: "最近在學", en: "Learning" }, v: { zh: "系統設計", en: "System design" } },
+      { k: { zh: "學歷", en: "Education" }, v: { zh: "政大資科碩士（預計 2027.01 畢業）", en: "M.S. CS, NCCU (exp. Jan 2027)" } },
+      { k: { zh: "研究方向", en: "Research" }, v: { zh: "深度學習 · 腦訊號分析", en: "Deep learning · Brain signals" } },      { k: { zh: "語言", en: "Languages" }, v: { zh: "中文、英文", en: "Mandarin, English" } },
     ],
-    photo: "", // 放照片路徑，例如 "assets/me.jpg"；留空會顯示幾何圖形
+    photo: "assets/me.jpg", // 留空會顯示幾何圖形
   },
 
   // type: "work"（實習／工作） 或 "edu"（學歷）
+  // 網頁上會自動依開始時間排序（新的在上面），這裡的順序不重要。
+  // summary、bullets、stack 都可以留空；全部空白時，該項目就不會出現展開按鈕。
   timeline: [
     {
       type: "work",
-      period: "2026.02 — 2026.08",
-      title: { zh: "後端工程實習生", en: "Backend Engineering Intern" },
-      org: { zh: "公司名稱 A", en: "Company A" },
+      period: { zh: "2026.02 — 至今", en: "2026.02 — Present" },
+      title: { zh: "實習生", en: "Intern" }, // 換成實際職稱，例如「資訊處 軟體開發實習生」
+      org: { zh: "永豐銀行", en: "Bank SinoPac" },
       summary: {
-        zh: "（示意）負責訂單服務的 API 開發與效能調校。",
-        en: "(Sample) Built and tuned APIs for the order service.",
+        zh: "負責部門資料庫維運，並開發部門內部使用的控管網站。",
+        en: "I maintain the department's databases and build an internal management website for the team.",
       },
       bullets: [
-        { zh: "重構查詢與加入快取，將 API 平均回應時間由 480ms 降到 120ms。", en: "Refactored queries and added caching, cutting average API latency from 480ms to 120ms." },
-        { zh: "撰寫整合測試，測試覆蓋率由 45% 提升到 78%。", en: "Wrote integration tests, raising coverage from 45% to 78%." },
-        { zh: "與前端、PM 協作，完成 3 個功能上線。", en: "Shipped 3 features together with frontend and PM." },
+        { zh: "定期維護與管理部門資料庫（MSSQL）。", en: "Perform routine maintenance and administration of the department's MSSQL databases." },
+        { zh: "開發部門內部的控管網站，以 .NET 建置後端並串接資料庫。", en: "Develop an internal management website with a .NET backend connected to the database." },
+        { zh: "在前端以圖表儀表板（Dashboard）視覺化呈現資料。", en: "Build a frontend dashboard that visualizes the data with charts." },
       ],
-      stack: ["Node.js", "PostgreSQL", "Redis", "Docker"],
-    },
-    {
-      type: "work",
-      period: "2025.07 — 2025.12",
-      title: { zh: "前端工程實習生", en: "Frontend Engineering Intern" },
-      org: { zh: "公司名稱 B", en: "Company B" },
-      summary: {
-        zh: "（示意）開發內部營運後台與共用元件庫。",
-        en: "(Sample) Built an internal ops dashboard and a shared component library.",
-      },
-      bullets: [
-        { zh: "建立 20+ 個可重用元件，新頁面開發時間減少約 30%。", en: "Created 20+ reusable components, reducing new-page build time by ~30%." },
-        { zh: "導入效能監測，首頁 LCP 由 3.2s 改善到 1.6s。", en: "Introduced performance monitoring; improved homepage LCP from 3.2s to 1.6s." },
-      ],
-      stack: ["React", "TypeScript", "Vite"],
-    },
-    {
-      type: "work",
-      period: "2024.07 — 2024.09",
-      title: { zh: "軟體開發實習生", en: "Software Development Intern" },
-      org: { zh: "公司名稱 C", en: "Company C" },
-      summary: {
-        zh: "（示意）協助開發資料處理的自動化工具。",
-        en: "(Sample) Helped build automation tools for data processing.",
-      },
-      bullets: [
-        { zh: "用 Python 撰寫排程腳本，每週省下約 6 小時人工作業。", en: "Wrote scheduled Python scripts, saving ~6 hours of manual work per week." },
-      ],
-      stack: ["Python", "SQL", "Git"],
+      stack: [".NET", "Node.js", "MSSQL"],
     },
     {
       type: "edu",
-      period: "2024.09 — 2026.06",
-      title: { zh: "資訊工程 碩士", en: "M.S. in Computer Science" },
-      org: { zh: "學校名稱", en: "University Name" },
-      summary: {
-        zh: "（示意）研究主題：分散式系統。GPA 4.0 / 4.3。",
-        en: "(Sample) Research topic: distributed systems. GPA 4.0 / 4.3.",
-      },
-      bullets: [
-        { zh: "修課：演算法、作業系統、資料庫系統、雲端運算。", en: "Coursework: Algorithms, Operating Systems, Database Systems, Cloud Computing." },
-      ],
+      period: "2025.09 — 2027.01",
+      title: { zh: "資訊科學系 碩士", en: "M.S. in Computer Science" },
+      org: { zh: "國立政治大學", en: "National Chengchi University (NCCU)" },
+      summary: { zh: "就讀中，預計 2027 年 1 月畢業。", en: "In progress, expected to graduate in January 2027." },
+      // 想補充的話可以加研究室、研究主題、修課、助教經歷，例如：
+      // bullets: [{ zh: "研究主題：……", en: "Research: ..." }],
+      bullets: [],
       stack: [],
     },
     {
       type: "edu",
-      period: "2020.09 — 2024.06",
-      title: { zh: "資訊工程 學士", en: "B.S. in Computer Science" },
-      org: { zh: "學校名稱", en: "University Name" },
-      summary: {
-        zh: "（示意）畢業專題獲系上第一名；擔任程式設計課助教。",
-        en: "(Sample) Capstone ranked 1st in the department; TA for Intro to Programming.",
-      },
-      bullets: [
-        { zh: "社團：程式設計研究社 社長。", en: "Club: President of the Programming Club." },
-      ],
+      period: "2021.09 — 2025.06",
+      title: { zh: "資訊工程學系 學士", en: "B.S. in Computer Science and Engineering" },
+      org: { zh: "國立臺灣海洋大學", en: "National Taiwan Ocean University (NTOU)" },
+      summary: { zh: "", en: "" },
+      bullets: [],
       stack: [],
+    },
+  ],
+
+  // 研討會發表：論文標題一律使用英文原文
+  publications: [
+    {
+      id: "apsipa2026",
+      date: "2026.11",
+      title: "EEG-Based Classification of Voter Political Preference: A Multi-Stage Comparative Study",
+      venue: { zh: "第 18 屆 APSIPA 年會暨研討會（APSIPA ASC 2026）", en: "18th APSIPA Annual Summit and Conference (APSIPA ASC 2026)" },
+      place: { zh: "泰國曼谷 · 2026 年 11 月 9–12 日", en: "Bangkok, Thailand · Nov 9–12, 2026" },
+      kind: { zh: "論文發表", en: "Paper presentation" },
+      tags: ["EEG", "Machine Learning", "Classification"],
+      cert: "assets/cert-apsipa-asc-2026.pdf",
+      color: "#7FD6D9",
+    },
+    {
+      id: "ivpai2026",
+      date: "2026.05",
+      title: "Deep Learning-Based Classification of Brain Activation Images for Pain Type Recognition During Social and Decision-Making Activities",
+      venue: { zh: "第 8 屆影像、視訊處理與人工智慧國際研討會（IVPAI 2026）", en: "8th International Conference on Image, Video Processing and Artificial Intelligence (IVPAI 2026)" },
+      place: { zh: "斯里蘭卡可倫坡 · 2026 年 5 月 7–9 日", en: "Colombo, Sri Lanka · May 7–9, 2026" },
+      kind: { zh: "口頭報告", en: "Oral presentation" },
+      tags: ["Deep Learning", "Brain Imaging", "Classification"],
+      cert: "assets/cert-ivpai-2026.pdf",
+      color: "#F4A300",
     },
   ],
 
   // colors 用來產生封面圖形；有截圖的話填 image，例如 "assets/project-1.png"
   projects: [
     {
-      id: "p1",
+      id: "tw-housing-migration",
       year: "2026",
-      title: { zh: "即時協作白板", en: "Realtime Whiteboard" },
-      tagline: { zh: "多人同步繪圖的 Web 應用", en: "A multiplayer drawing web app" },
+      title: { zh: "島內移動：台灣房市 × 人口遷徙", en: "Taiwan Housing × Migration Dashboard" },
+      tagline: {
+        zh: "把台灣的房價和人口搬遷放在同一張地圖上：房子貴到哪裡，人就往哪裡搬",
+        en: "Housing prices and domestic migration in Taiwan on one map: see where homes get expensive and where people move",
+      },
       description: {
-        zh: "（示意）支援多人同時編輯的線上白板。自行實作同步機制與斷線重連，在 50 人同時在線下維持流暢。",
-        en: "(Sample) An online whiteboard with multi-user editing. Implemented sync and reconnection myself; stays smooth with 50 concurrent users.",
+        zh: "北部房價太貴，大家真的都搬走了嗎？搬去哪？這個儀表板用 2020 年至今的官方資料回答：內政部實價登錄 175 萬筆住宅交易、戶政司每月戶籍遷入遷出，加上國泰房地產指數的開價與議價率。全部是公開資料，沒有估計或模擬值；來源、處理方式與限制都寫在網站上，資料處理程式也全部公開。",
+        en: "Northern Taiwan is expensive, but are people really leaving? Where do they go? This dashboard answers with official data since 2020: 1.75 million housing transactions from the actual-price registry, monthly household-registration moves, and listing prices and negotiation margins from the Cathay housing index. All data is public, with no estimates or simulations; sources, methods and limitations are documented on the site, and the data pipeline is open source.",
       },
       highlights: [
-        { zh: "以 WebSocket 實作操作同步與衝突處理", en: "Operation sync and conflict handling over WebSocket" },
-        { zh: "Canvas 分層渲染，維持 60fps", en: "Layered canvas rendering at 60fps" },
+        { zh: "同時比較開價、成交價與兩者之間的議價空間，不只看成交價", en: "Compares listing prices, actual prices and the negotiation gap between them, not just sale prices" },
+        { zh: "遷徙流向地圖：點任一縣市，箭頭畫出人往哪去、從哪來，箭頭越粗人越多，還能逐年播放", en: "Migration flow map: click any county to see where people go and come from; thicker arrows mean more people, with a year-by-year playback" },
+        { zh: "直接算出結論並隨資料自動更新，例如：台北市 2020 年以來淨遷出 19.6 萬人，七成去了新北", en: "Computes conclusions that update with the data, e.g. Taipei has lost a net 196,000 residents since 2020, 70% of them to New Taipei" },
+        { zh: "發現人口是一圈圈往外推（台北 → 新北 → 桃園 → 新竹），北部整體並未減少；拿掉台北市後，房價越高的縣市反而越吸人", en: "Shows people moving outward in rings (Taipei → New Taipei → Taoyuan → Hsinchu) while the north as a whole doesn't shrink; excluding Taipei, pricier counties actually attract more people" },
+        { zh: "以 Python 處理資料，前端使用 ECharts 繪製圖表、Leaflet 繪製互動地圖，部署於 GitHub Pages", en: "Data processed with Python; charts with ECharts and interactive maps with Leaflet, deployed on GitHub Pages" },
       ],
-      role: { zh: "個人專案 · 全端", en: "Solo project · Full-stack" },
-      stack: ["TypeScript", "React", "Node.js", "WebSocket", "Redis"],
-      links: { demo: "#", repo: "#" },
-      colors: ["#F4A300", "#111111"],
-      image: "",
-    },
-    {
-      id: "p2",
-      year: "2025",
-      title: { zh: "記帳 API 服務", en: "Expense Tracker API" },
-      tagline: { zh: "有完整測試與文件的 REST API", en: "A REST API with full tests and docs" },
-      description: {
-        zh: "（示意）提供記帳、分類、報表的後端服務。包含身分驗證、分頁、速率限制，並以 CI 自動測試與部署。",
-        en: "(Sample) Backend for expenses, categories and reports. Includes auth, pagination, rate limiting, with CI for tests and deploys.",
+      role: { zh: "個人專案 · 發想、資料與設計", en: "Solo project · Concept, data & design" },
+      stack: ["HTML / CSS", "JavaScript", "ECharts", "Leaflet", "Python", "Git", "GitHub Pages"],
+      links: {
+        demo: "https://kailunkong0720.github.io/tw-housing-migration-dashboard/",
+        repo: "https://github.com/Kailunkong0720/tw-housing-migration-dashboard",
       },
-      highlights: [
-        { zh: "OpenAPI 文件自動產生", en: "Auto-generated OpenAPI docs" },
-        { zh: "GitHub Actions 自動測試與部署", en: "Automated tests and deploys with GitHub Actions" },
-      ],
-      role: { zh: "個人專案 · 後端", en: "Solo project · Backend" },
-      stack: ["Python", "FastAPI", "PostgreSQL", "Docker"],
-      links: { demo: "", repo: "#" },
-      colors: ["#FF3B1F", "#F4F1EA"],
-      image: "",
-    },
-    {
-      id: "p3",
-      year: "2025",
-      title: { zh: "校園二手交易平台", en: "Campus Marketplace" },
-      tagline: { zh: "四人團隊的畢業專題", en: "A four-person capstone project" },
-      description: {
-        zh: "（示意）讓學生刊登與搜尋二手物品的平台。我負責前端架構與搜尋功能，上線後一個月累積 800+ 使用者。",
-        en: "(Sample) A platform for students to list and search second-hand items. I owned the frontend architecture and search; 800+ users in the first month.",
-      },
-      highlights: [
-        { zh: "關鍵字與分類的即時搜尋", en: "Instant search by keyword and category" },
-        { zh: "RWD 與無障礙設計", en: "Responsive and accessible UI" },
-      ],
-      role: { zh: "團隊專案 · 前端負責人", en: "Team project · Frontend lead" },
-      stack: ["React", "TypeScript", "Node.js", "PostgreSQL"],
-      links: { demo: "#", repo: "#" },
       colors: ["#7FD6D9", "#111111"],
-      image: "",
-    },
-    {
-      id: "p4",
-      year: "2024",
-      title: { zh: "命令列待辦工具", en: "CLI Todo Tool" },
-      tagline: { zh: "給開發者用的終端機小工具", en: "A tiny terminal tool for developers" },
-      description: {
-        zh: "（示意）用 Go 寫的命令列待辦清單，支援標籤、到期日與本機儲存。",
-        en: "(Sample) A command-line todo list in Go with tags, due dates and local storage.",
-      },
-      highlights: [
-        { zh: "單一執行檔，跨平台", en: "Single binary, cross-platform" },
-      ],
-      role: { zh: "個人專案", en: "Solo project" },
-      stack: ["Go", "Git"],
-      links: { demo: "", repo: "#" },
-      colors: ["#111111", "#F4A300"],
-      image: "",
+      image: "assets/project-housing-dashboard.jpg",
     },
   ],
 
+  // 技能名稱要和作品或經歷的 stack 寫法完全一樣：對到作品會篩選作品，只對到經歷會跳到該段經歷
   skills: [
-    { group: { zh: "語言", en: "Languages" }, items: ["TypeScript", "Python", "Go", "SQL"] },
-    { group: { zh: "前端", en: "Frontend" }, items: ["React", "Vite", "HTML / CSS"] },
-    { group: { zh: "後端", en: "Backend" }, items: ["Node.js", "FastAPI", "PostgreSQL", "Redis", "WebSocket"] },
-    { group: { zh: "工具", en: "Tooling" }, items: ["Git", "Docker", "GitHub Actions"] },
+    { group: { zh: "前端", en: "Frontend" }, items: ["HTML / CSS", "JavaScript"] },
+    { group: { zh: "後端與資料庫", en: "Backend & database" }, items: [".NET", "Node.js", "MSSQL"] },
+    { group: { zh: "資料視覺化", en: "Data visualization" }, items: ["ECharts", "Leaflet"] },
+    { group: { zh: "工具與部署", en: "Tools & deployment" }, items: ["Git", "GitHub Pages"] },
   ],
 };

@@ -1,3 +1,28 @@
+/* ================= PUBLICATIONS ================= */
+.pubs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: clamp(18px, 3vw, 32px); }
+.pub__card {
+  position: relative; height: 100%; display: flex; flex-direction: column; gap: 10px;
+  padding: clamp(22px, 3vw, 34px); padding-top: calc(clamp(22px, 3vw, 34px) + 14px);
+  border: 2px solid var(--ink); border-radius: 22px; background: var(--card); overflow: hidden;
+  transition: transform 0.25s ease-out, box-shadow 0.35s var(--ease);
+}
+.pub__card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 14px; background: var(--c); border-bottom: 2px solid var(--ink); }
+.pub__card::after {
+  content: ""; position: absolute; right: -50px; bottom: -50px; width: 150px; height: 150px; border-radius: 50%;
+  background: var(--c); opacity: 0.22; transition: transform 0.6s var(--ease); pointer-events: none;
+}
+.pub__card:hover { box-shadow: 8px 8px 0 var(--ink); }
+.pub__card:hover::after { transform: scale(1.6); }
+.pub__top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-family: var(--mono); font-size: 0.8rem; }
+.pub__kind { padding: 3px 10px; border-radius: 999px; background: var(--c); color: #111; border: 1.5px solid var(--ink); font-weight: 600; }
+.pub__date { color: var(--muted); }
+.pub__title { font-family: var(--display); font-weight: 800; font-size: clamp(1.2rem, 2.1vw, 1.6rem); line-height: 1.25; letter-spacing: -0.015em; }
+.pub__zh { color: var(--muted); font-size: 0.95rem; }
+.pub__venue { margin-top: auto; padding-top: 8px; font-weight: 600; font-size: 0.98rem; }
+.pub__place { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
+.pub .tags { margin-top: 2px; }
+.pub__cert { align-self: flex-start; margin-top: 8px; position: relative; z-index: 1; }
+
 /* ================= PROJECTS ================= */
 .plist { border-bottom: 2px solid var(--ink); }
 .proj { border-top: 2px solid var(--ink); animation: rise 0.6s var(--ease) both; }
@@ -117,3 +142,4 @@
   .proj__body { grid-template-columns: 1fr; padding-left: 0; }
   .pfloat { display: none; }
 }
+.skill sup.skill__exp { font-size: 0.62rem; padding: 1px 5px; border: 1px solid currentColor; border-radius: 999px; opacity: 0.75; }

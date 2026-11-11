@@ -5,3 +5,6 @@
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# 原始個人資料（已複製需要的檔案到 assets/）
+personal_profile/

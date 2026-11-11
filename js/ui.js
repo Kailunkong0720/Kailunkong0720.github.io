@@ -39,7 +39,7 @@
 
   /* ---------- 導覽列、進度條、目前所在區塊 ---------- */
   var nav = $("nav"), progress = $("progress"), tl = $("timeline"), lastY = scrollY, vel = 0;
-  var secs = ["about", "experience", "projects", "skills", "contact"].map($);
+  var secs = ["about", "experience", "publications", "projects", "skills", "contact"].map($);
   var navLinks = {};
   document.querySelectorAll("[data-nav]").forEach(function (a) { navLinks[a.dataset.nav] = a; });
   function onScroll() {
@@ -49,7 +49,7 @@
     if (Math.abs(y - lastY) > 6) nav.classList.toggle("is-hidden", y > lastY && y > 400);
     vel += (y - lastY) * 0.35; lastY = y;
     var mid = innerHeight * 0.4, cur = "";
-    secs.forEach(function (s) { if (s && s.getBoundingClientRect().top <= mid) cur = s.id; });
+    secs.forEach(function (s) { if (s && !s.hidden && s.getBoundingClientRect().top <= mid) cur = s.id; });
     for (var k in navLinks) navLinks[k].classList.toggle("is-active", k === cur);
     if (tl) { // 時間軸的線隨捲動畫出來
       var r = tl.getBoundingClientRect();

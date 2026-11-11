@@ -6,10 +6,18 @@
   var state = A.state = {
     tlFilter: "all",
     projFilter: "all",
-    openTl: { 0: true },
+    openTl: {},
     openProj: {},
   };
   if (S.projects[0]) state.openProj[S.projects[0].id] = true;
+
+  // 經歷依開始時間排序（新的在上面）；預設展開最新一筆有內容的項目
+  function startOf(t) { var m = String(tr(t.period)).match(/(\d{4})\D?(\d{1,2})?/); return m ? +m[1] * 100 + (+m[2] || 0) : 0; }
+  function hasBody(t) { return !!(tr(t.summary) || (t.bullets || []).length || (t.stack || []).length); }
+  var tlOrder = S.timeline.map(function (t, i) { return i; }).sort(function (a, b) {
+    return startOf(S.timeline[b]) - startOf(S.timeline[a]) || a - b;
+  });
+  for (var oi = 0; oi < tlOrder.length; oi++) if (hasBody(S.timeline[tlOrder[oi]])) { state.openTl[tlOrder[oi]] = true; break; }
 
   /* ---------- 小工具 ---------- */
   function hash(str) { var h = 2166136261; for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
@@ -49,6 +57,7 @@
     document.title = tr(p.name) + " — " + tr(p.roles[0]);
     $("emailText").textContent = S.meta.email;
     $("resumeLink").href = S.meta.resume || "#";
+    $("resumeLink").hidden = !S.meta.resume;
     $("footYear").textContent = new Date().getFullYear();
     var shape = $("portraitShape");
     if (p.photo) { shape.style.backgroundImage = 'url("' + p.photo + '")'; shape.classList.add("has-photo"); }
@@ -63,23 +72,44 @@
 
   /* ---------- 經歷時間軸 ---------- */
   function renderTimeline() {
-    $("timeline").innerHTML = S.timeline.map(function (t, i) {
-      var open = !!state.openTl[i], out = state.tlFilter !== "all" && state.tlFilter !== t.type;
+    $("timeline").innerHTML = tlOrder.map(function (i) {
+      var t = S.timeline[i], body = hasBody(t), open = body && !!state.openTl[i], out = state.tlFilter !== "all" && state.tlFilter !== t.type;
+      var head = '<span class="tl__title">' + e(tr(t.title)) + '<span class="tl__type">' + A.t(t.type === "edu" ? "exp.eduOne" : "exp.workOne") + "</span></span>" +
+        '<span class="tl__org">' + e(tr(t.org)) + "</span>";
+      var sum = tr(t.summary), bullets = t.bullets || [], stack = t.stack || [];
       return '<li class="tl__item' + rvc() + (open ? " is-open" : "") + (out ? " is-out" : "") + '" data-type="' + t.type + '" data-i="' + i + '">' +
-        '<span class="tl__period">' + e(t.period) + '</span><span class="tl__dot"></span>' +
+        '<span class="tl__period">' + e(tr(t.period)) + '</span><span class="tl__dot"></span>' +
         '<div class="tl__main' + (open ? " is-open" : "") + '">' +
-        '<button class="tl__head" type="button" aria-expanded="' + open + '" data-toggle="tl" data-cursor="label" data-cursor-key="' + (open ? "cursor.close" : "cursor.open") + '">' +
-        '<span class="tl__title">' + e(tr(t.title)) + '<span class="tl__type">' + A.t(t.type === "edu" ? "exp.edu" : "exp.work") + "</span></span>" +
-        '<span class="tl__org">' + e(tr(t.org)) + '</span><span class="plus" aria-hidden="true"></span></button>' +
-        '<div class="fold"><div><div class="tl__body"><p>' + e(tr(t.summary)) + "</p><ul>" +
-        (t.bullets || []).map(function (b) { return "<li>" + e(tr(b)) + "</li>"; }).join("") + "</ul>" +
-        ((t.stack || []).length ? '<div class="tags">' + t.stack.map(function (s) { return '<span class="tag">' + e(s) + "</span>"; }).join("") + "</div>" : "") +
-        "</div></div></div></div></li>";
+        (body
+          ? '<button class="tl__head" type="button" aria-expanded="' + open + '" data-toggle="tl" data-cursor="label" data-cursor-key="' + (open ? "cursor.close" : "cursor.open") + '">' +
+            head + '<span class="plus" aria-hidden="true"></span></button>' +
+            '<div class="fold"><div><div class="tl__body">' +
+            (sum ? "<p>" + e(sum) + "</p>" : "") +
+            (bullets.length ? "<ul>" + bullets.map(function (b) { return "<li>" + e(tr(b)) + "</li>"; }).join("") + "</ul>" : "") +
+            (stack.length ? '<div class="tags">' + stack.map(function (s) { return '<span class="tag">' + e(s) + "</span>"; }).join("") + "</div>" : "") +
+            "</div></div></div>"
+          : '<div class="tl__head tl__head--static">' + head + "</div>") +
+        "</div></li>";
     }).join("");
     document.querySelectorAll("#tlTabs .tab").forEach(function (b) {
       var on = b.dataset.filter === state.tlFilter;
       b.classList.toggle("is-on", on); b.setAttribute("aria-selected", on);
     });
+  }
+
+  /* ---------- 研討會發表 ---------- */
+  function renderPubs() {
+    var list = S.publications || [];
+    $("pubList").innerHTML = list.map(function (p, i) {
+      return '<li class="pub' + rvc() + '" style="--c:' + e(p.color || "#f4a300") + ";--d:" + i * 0.1 + 's">' +
+        '<div class="pub__card" data-tilt>' +
+        '<div class="pub__top"><span class="pub__kind">' + e(tr(p.kind)) + '</span><span class="pub__date">' + e(p.date) + "</span></div>" +
+        '<h3 class="pub__title">' + e(p.title) + "</h3>" +
+        '<p class="pub__venue">' + e(tr(p.venue)) + '</p><p class="pub__place">' + e(tr(p.place)) + "</p>" +
+        '<div class="tags">' + (p.tags || []).map(function (t) { return '<span class="tag">' + e(t) + "</span>"; }).join("") + "</div>" +
+        (p.cert ? '<a class="linkbtn pub__cert" href="' + e(p.cert) + '" target="_blank" rel="noopener">' + A.t("pub.cert") + "</a>" : "") +
+        "</div></li>";
+    }).join("");
   }
 
   /* ---------- 作品 ---------- */
@@ -112,25 +142,51 @@
         "</div></div></div></div></div></li>";
     }).join("");
     $("projEmpty").hidden = shown > 0;
+    $("projFilters").hidden = S.projects.length < 2; // 只有一個作品時不需要篩選
   }
 
-  /* ---------- 技能（點了會篩選作品） ---------- */
+  /* ---------- 技能（點了會篩選作品，或跳到用到它的經歷） ---------- */
+  function tlUsing(skill) {
+    return tlOrder.filter(function (i) { return (S.timeline[i].stack || []).indexOf(skill) >= 0; });
+  }
   function renderSkills() {
     var counts = stackCounts();
     $("skillsGrid").innerHTML = S.skills.map(function (g, gi) {
       return '<div class="sgroup' + rvc() + '" style="--d:' + gi * 0.07 + 's"><h3>' + e(tr(g.group)) + "</h3><ul>" + g.items.map(function (s) {
-        var n = counts[s] || 0;
-        return '<li><button class="skill' + (state.projFilter === s ? " is-on" : "") + '" type="button" data-skill="' + e(s) + '"' + (n ? "" : " disabled") + ">" + e(s) + (n ? "<sup>" + n + "</sup>" : "") + "</button></li>";
+        var n = counts[s] || 0, exp = n ? 0 : tlUsing(s).length;
+        return '<li><button class="skill' + (state.projFilter === s ? " is-on" : "") + '" type="button" data-skill="' + e(s) + '"' + (exp ? ' data-exp="1"' : "") + (n || exp ? "" : " disabled") + ">" + e(s) +
+          (n ? "<sup>" + n + "</sup>" : exp ? '<sup class="skill__exp">' + A.t("skills.exp") + "</sup>" : "") + "</button></li>";
       }).join("") + "</ul></div>";
     }).join("");
     var all = [];
     S.skills.forEach(function (g) { all = all.concat(g.items); });
+    while (all.length && all.length < 12) all = all.concat(all); // 技能少時重複，跑馬燈才不會出現空白
     var one = all.map(function (s) { return "<span>" + e(s) + "<b></b></span>"; }).join("");
     $("marqueeTrack").innerHTML = one + one + one;
   }
 
+  /* ---------- 沒有內容的區塊（作品、技能）自動隱藏，編號跟著調整 ---------- */
+  function applyVisibility() {
+    var hasProj = S.projects.length > 0;
+    var hasSkills = S.skills.some(function (g) { return (g.items || []).length > 0; });
+    var show = { projects: hasProj, skills: hasSkills, publications: (S.publications || []).length > 0 };
+    Object.keys(show).forEach(function (id) {
+      $(id).hidden = !show[id];
+      var link = document.querySelector('[data-nav="' + id + '"]');
+      if (link) link.hidden = !show[id];
+    });
+    $("marquee").hidden = !hasSkills;
+    var cta = document.querySelector(".hero__cta .btn--solid");
+    if (cta) { cta.setAttribute("href", hasProj ? "#projects" : "#experience"); cta.dataset.i18n = hasProj ? "hero.cta1" : "hero.cta1b"; }
+    var n = 0;
+    document.querySelectorAll(".sec").forEach(function (s) {
+      if (!s.hidden) s.querySelector(".sec__num").textContent = ("0" + ++n).slice(-2);
+    });
+  }
+
   function renderAll() {
-    renderBasics(); renderTimeline(); renderProjects(); renderSkills();
+    renderBasics(); renderTimeline(); renderPubs(); renderProjects(); renderSkills();
+    applyVisibility();
     A.applyI18n();
     first = false;
     A.emit("render");
@@ -163,6 +219,14 @@
       state.tlFilter = t.dataset.filter; renderTimeline(); A.emit("render");
     } else if (t.dataset.pf) {
       A.setProjFilter(t.dataset.pf, false);
+    } else if (t.dataset.skill && t.dataset.exp) {
+      // 只出現在經歷裡的技能：展開那段經歷並捲過去
+      var idx = tlUsing(t.dataset.skill);
+      idx.forEach(function (i) { state.openTl[i] = true; });
+      state.tlFilter = "all"; renderTimeline(); A.emit("render");
+      var li = document.querySelector('.tl__item[data-i="' + idx[0] + '"]');
+      if (li) li.scrollIntoView({ behavior: A.reduced ? "auto" : "smooth", block: "center" });
+      A.toast(A.t("toast.exp") + t.dataset.skill);
     } else if (t.dataset.skill && !t.disabled) {
       A.setProjFilter(t.dataset.skill, true);
     }
@@ -170,4 +234,11 @@
 
   A.on("lang", renderAll);
   renderAll();
+
+  // 履歷 PDF 還沒放進 assets/ 時，先隱藏「下載履歷」相關按鈕；放進去之後會自動出現
+  if (S.meta.resume && location.protocol !== "file:" && window.fetch) {
+    fetch(S.meta.resume, { method: "HEAD", cache: "no-cache" }).then(function (r) {
+      if (!r.ok) { S.meta.resume = ""; renderBasics(); A.emit("render"); }
+    }, function () {});
+  }
 })();

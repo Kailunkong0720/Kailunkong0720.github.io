@@ -125,6 +125,8 @@
 .tl__head { width: 100%; text-align: left; display: grid; grid-template-columns: 1fr auto; gap: 4px 18px; align-items: center; padding: 16px 0; }
 .tl__title { font-family: var(--display); font-weight: 800; font-size: clamp(1.25rem, 2.6vw, 1.9rem); line-height: 1.2; letter-spacing: -0.015em; transition: transform 0.4s var(--ease); }
 .tl__head:hover .tl__title { transform: translateX(8px); }
+.tl__head--static { cursor: default; }
+.tl__head--static:hover .tl__title { transform: none; }
 .tl__org { grid-column: 1; color: var(--muted); font-size: 0.98rem; }
 .tl__type { font-family: var(--mono); font-size: 0.7rem; padding: 2px 8px; border: 1px solid var(--line); border-radius: 999px; margin-left: 8px; vertical-align: middle; }
 .plus { grid-row: 1 / span 2; grid-column: 2; position: relative; width: 34px; height: 34px; border: 1.5px solid var(--ink); border-radius: 50%; transition: transform 0.5s var(--ease), background-color 0.3s; }

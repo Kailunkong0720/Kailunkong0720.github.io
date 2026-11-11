@@ -15,8 +15,9 @@
 
   // keys：額外的搜尋關鍵字（中英文都能找到）
   function commands() {
-    var nav = [["about", "about 關於 me"], ["experience", "experience 經歷 實習 學歷 education intern"], ["projects", "projects 作品 work"], ["skills", "skills 技能"], ["contact", "contact 聯絡 email"]];
-    var out = nav.map(function (n) { return { label: A.t("nav." + n[0]), hint: A.t("pal.gNav"), keys: n[1], run: go(n[0]) }; });
+    var nav = [["about", "about 關於 me"], ["experience", "experience 經歷 實習 學歷 education intern"], ["publications", "publications papers conference 發表 論文 研討會 research"], ["projects", "projects 作品 work"], ["skills", "skills 技能"], ["contact", "contact 聯絡 email"]];
+    var out = nav.filter(function (n) { var el = document.getElementById(n[0]); return el && !el.hidden; })
+      .map(function (n) { return { label: A.t("nav." + n[0]), hint: A.t("pal.gNav"), keys: n[1], run: go(n[0]) }; });
     out.push({ label: A.t("pal.top"), hint: A.t("pal.gNav"), keys: "top home 頂端 首頁", run: go("top") });
     var act = A.t("pal.gAct");
     out.push({ label: A.t("pal.lang"), hint: act, keys: "language 語言 english 中文 chinese lang", run: A.toggleLang });
