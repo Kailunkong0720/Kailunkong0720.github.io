@@ -7,10 +7,10 @@
 直接用瀏覽器打開 `index.html`，或在這個資料夾執行：
 
 ```bash
-python -m http.server 5173
+python -m http.server 5180
 ```
 
-然後開 <http://localhost:5173>。
+然後開 <http://localhost:5180>。
 
 ## 換成自己的內容
 

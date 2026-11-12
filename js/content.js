@@ -33,14 +33,14 @@ window.SITE = {
         en: "I'm Conan Kong, a master's student in Computer Science at National Chengchi University (graduating January 2027). I'm currently an intern at Bank SinoPac, where I maintain databases and build internal web tools. I hold a bachelor's degree in Computer Science and Engineering from National Taiwan Ocean University.",
       },
       {
-        zh: "研究所期間，我以深度學習分析腦部訊號，已在 IVPAI 2026 與 APSIPA ASC 2026 兩場國際研討會發表論文；實務上則累積了 .NET、MSSQL 與資料視覺化的開發經驗。",
-        en: "In grad school I apply deep learning to brain signals, and have presented papers at two international conferences, IVPAI 2026 and APSIPA ASC 2026. On the industry side, I build with .NET, MSSQL and data visualization.",
+        zh: "研究所期間，我以深度學習分析腦部訊號，已在 IVPAI 2026 與 APSIPA ASC 2026 兩場國際研討會發表論文，另有一篇獲 ICSSH 2026 接受；實務上則累積了 .NET、MSSQL 與資料視覺化的開發經驗。",
+        en: "In grad school I apply deep learning to brain signals, have presented papers at two international conferences, IVPAI 2026 and APSIPA ASC 2026, and have a third paper accepted at ICSSH 2026. On the industry side, I build with .NET, MSSQL and data visualization.",
       },
     ],
     facts: [
       { k: { zh: "所在地", en: "Based in" }, v: { zh: "台北", en: "Taipei" } },
       { k: { zh: "學歷", en: "Education" }, v: { zh: "政大資科碩士（預計 2027.01 畢業）", en: "M.S. CS, NCCU (exp. Jan 2027)" } },
-      { k: { zh: "研究方向", en: "Research" }, v: { zh: "深度學習 · 腦訊號分析", en: "Deep learning · Brain signals" } },      { k: { zh: "語言", en: "Languages" }, v: { zh: "中文、英文", en: "Mandarin, English" } },
+      { k: { zh: "研究方向", en: "Research" }, v: { zh: "深度學習 · 腦訊號分析", en: "Deep learning · Brain signals" } },      { k: { zh: "語言", en: "Languages" }, v: { zh: "中文、英文、粵語、馬來語、客家語", en: "Mandarin, English, Cantonese, Malay, Hakka" } },
     ],
     photo: "assets/me.jpg", // 留空會顯示幾何圖形
   },
@@ -71,9 +71,16 @@ window.SITE = {
       title: { zh: "資訊科學系 碩士", en: "M.S. in Computer Science" },
       org: { zh: "國立政治大學", en: "National Chengchi University (NCCU)" },
       summary: { zh: "就讀中，預計 2027 年 1 月畢業。", en: "In progress, expected to graduate in January 2027." },
-      // 想補充的話可以加研究室、研究主題、修課、助教經歷，例如：
-      // bullets: [{ zh: "研究主題：……", en: "Research: ..." }],
-      bullets: [],
+      bullets: [
+        {
+          zh: "碩士論文：基於深度學習模型與腦電圖建立偏好預測系統",
+          en: "Master's thesis: A Systematic Analysis of the Preference Prediction Using EEG Measures with Deep Learning Models: A Political Case",
+        },
+        {
+          zh: "一年級 GPA：上學期 4.0 / 4.0、下學期 3.59 / 4.0。",
+          en: "First-year GPA: 4.0 / 4.0 (fall), 3.59 / 4.0 (spring).",
+        },
+      ],
       stack: [],
     },
     {
@@ -89,6 +96,17 @@ window.SITE = {
 
   // 研討會發表：論文標題一律使用英文原文
   publications: [
+    {
+      id: "icssh2026",
+      date: "2026",
+      title: "Temporal Segmentation and Inter-Model Agreement in Party Affiliation Classification: Evidence from Taiwan's PTT",
+      venue: { zh: "社會科學與人文國際研討會（ICSSH 2026）", en: "International Conference on Social Sciences and Humanities (ICSSH 2026)" },
+      place: { zh: "", en: "" }, // 日期與地點確定後補上，例如 { zh: "日本東京 · 2026 年 12 月", en: "Tokyo, Japan · Dec 2026" }
+      kind: { zh: "已接受", en: "Accepted" },
+      tags: ["NLP", "Text Classification", "PTT"],
+      cert: "", // 發表後有證書再放進 assets/ 並填路徑
+      color: "#FF3B1F",
+    },
     {
       id: "apsipa2026",
       date: "2026.11",
@@ -106,7 +124,7 @@ window.SITE = {
       title: "Deep Learning-Based Classification of Brain Activation Images for Pain Type Recognition During Social and Decision-Making Activities",
       venue: { zh: "第 8 屆影像、視訊處理與人工智慧國際研討會（IVPAI 2026）", en: "8th International Conference on Image, Video Processing and Artificial Intelligence (IVPAI 2026)" },
       place: { zh: "斯里蘭卡可倫坡 · 2026 年 5 月 7–9 日", en: "Colombo, Sri Lanka · May 7–9, 2026" },
-      kind: { zh: "口頭報告", en: "Oral presentation" },
+      kind: { zh: "論文發表", en: "Paper presentation" },
       tags: ["Deep Learning", "Brain Imaging", "Classification"],
       cert: "assets/cert-ivpai-2026.pdf",
       color: "#F4A300",
@@ -144,6 +162,9 @@ window.SITE = {
       image: "assets/project-housing-dashboard.jpg",
     },
   ],
+
+  // 首頁下方跑馬燈顯示的程式語言
+  marquee: ["Python", "C / C++", "HTML / CSS", "JavaScript", "MSSQL", ".NET"],
 
   // 技能名稱要和作品或經歷的 stack 寫法完全一樣：對到作品會篩選作品，只對到經歷會跳到該段經歷
   skills: [

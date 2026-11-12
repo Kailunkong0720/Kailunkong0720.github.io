@@ -105,7 +105,7 @@
         '<div class="pub__card" data-tilt>' +
         '<div class="pub__top"><span class="pub__kind">' + e(tr(p.kind)) + '</span><span class="pub__date">' + e(p.date) + "</span></div>" +
         '<h3 class="pub__title">' + e(p.title) + "</h3>" +
-        '<p class="pub__venue">' + e(tr(p.venue)) + '</p><p class="pub__place">' + e(tr(p.place)) + "</p>" +
+        '<p class="pub__venue">' + e(tr(p.venue)) + "</p>" + (tr(p.place) ? '<p class="pub__place">' + e(tr(p.place)) + "</p>" : "") +
         '<div class="tags">' + (p.tags || []).map(function (t) { return '<span class="tag">' + e(t) + "</span>"; }).join("") + "</div>" +
         (p.cert ? '<a class="linkbtn pub__cert" href="' + e(p.cert) + '" target="_blank" rel="noopener">' + A.t("pub.cert") + "</a>" : "") +
         "</div></li>";
@@ -158,8 +158,9 @@
           (n ? "<sup>" + n + "</sup>" : exp ? '<sup class="skill__exp">' + A.t("skills.exp") + "</sup>" : "") + "</button></li>";
       }).join("") + "</ul></div>";
     }).join("");
-    var all = [];
-    S.skills.forEach(function (g) { all = all.concat(g.items); });
+    // 跑馬燈：有 marquee 清單就用它，否則用全部技能
+    var all = (S.marquee || []).slice();
+    if (!all.length) S.skills.forEach(function (g) { all = all.concat(g.items); });
     while (all.length && all.length < 12) all = all.concat(all); // 技能少時重複，跑馬燈才不會出現空白
     var one = all.map(function (s) { return "<span>" + e(s) + "<b></b></span>"; }).join("");
     $("marqueeTrack").innerHTML = one + one + one;
@@ -175,7 +176,7 @@
       var link = document.querySelector('[data-nav="' + id + '"]');
       if (link) link.hidden = !show[id];
     });
-    $("marquee").hidden = !hasSkills;
+    $("marquee").hidden = !((S.marquee || []).length || hasSkills);
     var cta = document.querySelector(".hero__cta .btn--solid");
     if (cta) { cta.setAttribute("href", hasProj ? "#projects" : "#experience"); cta.dataset.i18n = hasProj ? "hero.cta1" : "hero.cta1b"; }
     var n = 0;
